@@ -133,17 +133,27 @@ for seqPair in seqPairs:
     endListRev = getSeqInd(insult(sequence), primers[1]) # Low value means end of string
     endList = revInd(endListRev, len(sequence)) # Low value means beginning of string
 
-    start = min(startList)
-    endFp = max(endList) # chars from beginning of sequence at which to stop
-    endTp = min(endListRev) # chars from terminus of sequence at which to stop
-    if (endFp > start):
+    start = min(startList) if len(startList) else -1
+    endFp = max(endList) if len(endList) else -1 # chars from beginning of sequence at which to stop
+    endTp = min(endListRev) if len(endListRev) else -1 # chars from terminus of sequence at which to stop
+
+    # Print things
+    if (debugActive):
+        print sequence
+    if (start > -1 and endFp > -1):
         print(seqName)
-        if (debugActive):
-            print sequence
-        amplicon = sequence[start:-endTp]
+        if (endFp > start):
+            amplicon = sequence[start:-endTp]
+            friendlyStarts = [item+1 for item in startList]
+            friendlyEnds = [item+1 for item in endList]
+            print(["5'", primers[0], "3'", primers[1], "starts:", friendlyStarts, "ends:", friendlyEnds, "amplicon len:", len(amplicon)])
+            print(amplicon)
+        else:
+            print "Note: start and end out of order."
+    else:
+        print "Note: no primer match."
         friendlyStarts = [item+1 for item in startList]
         friendlyEnds = [item+1 for item in endList]
         print(["5'", primers[0], "3'", primers[1], "starts:", friendlyStarts, "ends:", friendlyEnds, "amplicon len:", len(amplicon)])
-        print(amplicon)
-
+        
 sys.exit
