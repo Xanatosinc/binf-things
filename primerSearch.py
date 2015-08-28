@@ -154,6 +154,6 @@ for seqPair in seqPairs:
         print "Note: no primer match."
         friendlyStarts = [item+1 for item in startList]
         friendlyEnds = [item+1 for item in endList]
-        print(["5'", primers[0], "3'", primers[1], "starts:", friendlyStarts, "ends:", friendlyEnds, "amplicon len:", len(amplicon)])
+        print(["5'", primers[0], "3'", primers[1], "starts:", friendlyStarts, "ends:", friendlyEnds])
         
 sys.exit
